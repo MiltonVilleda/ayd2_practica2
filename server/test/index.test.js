@@ -5,6 +5,24 @@ const expect = require("chai").expect;
 
 chai.use(chaiHttp)
 
+//unit test 0 server is running
+describe('server is running', () => {
+    it('show message', (done) => {
+        const status = 200;
+        const texto = 'api is working'
+
+        chai.request(app)
+            .get('/')
+            .end(function(err, res) {
+                if (err) throw err
+                console.log(err)
+                expect(res).to.have.status(status)
+                expect(res.text).to.equal(text)
+                done()
+            })
+    })
+})
+
 //unit test 1 add user
 describe('create user', () => {
     it('add user', (done) => {
