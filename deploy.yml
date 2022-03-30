@@ -3,15 +3,10 @@
   become: true
   tasks:
   - name: create container
-    docker_container:
+    community.docker.docker_container:
       name: web_page
       image: miltonvilleda/pagina_img:lts
       state: started
       ports:
       - "8081:80"
-      exposed_ports:
-      - 80
-      tty: true
-      detach: true
-    vars:
-      ansible_python_interpreter: /bin/python3
+      restart_policy: always
