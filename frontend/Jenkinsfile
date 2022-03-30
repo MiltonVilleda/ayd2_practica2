@@ -19,9 +19,12 @@ pipeline {
         dir('frontend') {
           sh 'npm install'
         }
+        dir('server') {
+          sh 'npm install'
+        }
       }
     }
-
+    /*
     stage('test') {
       steps {
         dir('frontend') {
@@ -52,7 +55,7 @@ pipeline {
       steps {
         sh 'docker run -d -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
       }
-    }
+    }*/
   }
 
 }
