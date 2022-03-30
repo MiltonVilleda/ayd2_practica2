@@ -9,8 +9,8 @@
       state: started
       ports:
       - "8081:80"
-      publishe_ports:
-      - "8081:80"
+      exposed_ports:
+      - 80
       tty: true
       detach: true
     vars:
