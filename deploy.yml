@@ -1,5 +1,5 @@
 ---
-- host: web-server
+- hosts: test
   become: true
   task:
   - name: create container
