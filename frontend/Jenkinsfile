@@ -19,12 +19,13 @@ pipeline {
         dir('frontend') {
           sh 'npm install'
         }
+        
         dir('server') {
           sh 'npm install'
         }
       }
     }
-    
+
     /*
     stage('test') {
       steps {
