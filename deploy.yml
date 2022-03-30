@@ -3,7 +3,7 @@
   become: true
   tasks:
   - name: create container
-    community.docker.docker_container:
+    docker_container:
       name: web_page
       image: miltonvilleda/pagina_img:lts
       state: started
