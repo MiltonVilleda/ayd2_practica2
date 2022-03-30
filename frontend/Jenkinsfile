@@ -12,6 +12,10 @@ pipeline {
     string(name: 'container_port', defaultValue: '80', description: 'Puerto que usa el contenedor')
   }
 
+  environment {
+    DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+  }
+
   stages {
     stage('install') {
       steps {
@@ -33,7 +37,7 @@ pipeline {
         }
       }
     }
-    /*
+    
     stage('build') {
       steps {
         dir('frontend') {
@@ -47,11 +51,14 @@ pipeline {
             }
           }
           sh 'npm run build'
-          sh 'docker build -t ${image_name}:${tag_image} .'
+          sh 'docker build -t miltonvilleda/${image_name}:${tag_image} .'
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+          sh 'docker push miltonvilleda/${image_name}:${tag_name}'
+          sh 'docker logout'
         }
       }
     }
-
+    /*
     stage('deploy') {
       steps {
         sh 'docker run -d -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
