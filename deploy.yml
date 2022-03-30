@@ -1,5 +1,6 @@
 ---
-- hosts: test
+- name: test-server
+  hosts: test
   become: true
   tasks:
   - name: create container
@@ -9,4 +10,16 @@
       state: started
       ports:
       - "8081:80"
+      restart_policy: always
+- name: production-server
+  hosts: production
+  become: true
+  tasks:
+  - name: create container
+    docker_container:
+      name: web_page_prod
+      image: miltonvilleda/pagina_img:lts
+      state: started
+      ports:
+      - "8082:80"
       restart_policy: always
