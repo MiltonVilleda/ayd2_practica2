@@ -1,7 +1,7 @@
 ---
 - hosts: test
   become: true
-  task:
+  tasks:
   - name: create container
     docker_container:
       name: web_page
