@@ -7,6 +7,7 @@
       name: web_page
       image: miltonvilleda/pagina_img:lts
       state: started
+      restart: yes
       ports:
       - "8081:80"
     vars:
