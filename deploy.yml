@@ -10,5 +10,7 @@
       restart: yes
       ports:
       - "8081:80"
+      exposed_ports:
+      - "8081"
     vars:
       ansible_python_interpreter: /bin/python3
