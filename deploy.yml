@@ -5,7 +5,7 @@
   - name: create container
     docker_container:
       name: web_page
-      image: miltonvilleda/pagina_img:default
+      image: miltonvilleda/pagina_img:lts
       state: present
       ports:
       - "8081:80"
