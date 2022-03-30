@@ -1,0 +1,11 @@
+---
+- host: web-server
+  become: true
+  task:
+  - name: create container
+    docker_container:
+      name: web_page
+      image: miltonvilleda/pagina_img
+      state: present
+      ports:
+      - "8081:80"

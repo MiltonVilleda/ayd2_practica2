@@ -58,12 +58,12 @@ pipeline {
         }
       }
     }
-    /*
+    
     stage('deploy') {
       steps {
-        sh 'docker run -d -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
+        ansiblePlaybook credentialsId: 'test-key', disableHostKeyChecking: true, installation: 'ansible', playbook: 'deploy.yml'
       }
-    }*/
+    }
   }
 
 }
