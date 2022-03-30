@@ -1,2 +1,2 @@
 [test]
-34.121.204.77 ansible_user=test_user
+34.121.204.77 ansible_user=test-user
