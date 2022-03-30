@@ -38,6 +38,7 @@ app.post('/update', (req, res) => {
     if (username != undefined && password != undefined && new_username != undefined) {
         return res.status(200).send('actualizacion exitosa')
     }
+    
     return res.status(400).send('error al actualizar')
 });
 
