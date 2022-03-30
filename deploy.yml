@@ -8,7 +8,7 @@
       image: miltonvilleda/pagina_img:lts
       state: started
       restart: yes
-      ports:
+      published_ports:
       - "8081:80"
       exposed_ports:
       - "8081"
