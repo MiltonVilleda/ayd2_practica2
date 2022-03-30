@@ -61,7 +61,7 @@ pipeline {
     
     stage('deploy') {
       steps {
-        ansiblePlaybook credentialsId: 'test-key', disableHostKeyChecking: true, installation: 'ansible', playbook: 'deploy.yml'
+        ansiblePlaybook credentialsId: 'test-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'deploy.yml'
       }
     }
   }
