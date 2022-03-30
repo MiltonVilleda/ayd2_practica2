@@ -62,6 +62,7 @@ pipeline {
     stage('deploy') {
       steps {
         ansiblePlaybook credentialsId: 'slave1', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'deploy.yml'
+        ansiblePlaybook credentialsId: 'prod-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'deploy2.yml'
       }
     }
   }
