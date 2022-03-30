@@ -9,7 +9,7 @@ chai.use(chaiHttp)
 describe('server is running', () => {
     it('show message', (done) => {
         const status = 200;
-        const texto = 'api is working'
+        const text = 'api is working'
 
         chai.request(app)
             .get('/')
