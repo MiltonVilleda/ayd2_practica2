@@ -90,6 +90,7 @@ describe('update user', () => {
     })
 })
 
+/*
 //unit test 1.2 add user fail
 describe('create user fail', () => {
     it('add user', (done) => {
@@ -153,3 +154,4 @@ describe('update user fail', () => {
             })
     })
 })
+*/
