@@ -50,8 +50,9 @@ pipeline {
             }
             try {
               sh 'docker rmi ${image_name}:${tag_image}'
-            } catch (Exception e)
-            echo 'Exception occurred image: ' + e.toString()
+            } catch (Exception e) {
+              echo 'Exception occurred image: ' + e.toString()
+            }
           }
           sh 'npm run build'
           sh 'docker build -t miltonvilleda/${image_name}:${tag_image} .'
