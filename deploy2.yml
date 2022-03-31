@@ -3,6 +3,14 @@
   hosts: production
   become: true
   tasks:
+  - name: stop container
+    docker_container:
+      name: web_page
+      state: stopped
+  - name: remove container
+    docker_container:
+      name: web_page
+      state: absent
   - name: create container
     docker_container:
       name: web_page_prod
