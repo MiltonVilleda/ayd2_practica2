@@ -45,10 +45,13 @@ pipeline {
             try {
               sh 'docker stop ${container_name}'
               sh 'docker rm ${container_name}'
-              sh 'docker rmi ${image_name}:${tag_image}'
             } catch (Exception e) {
-              echo 'Exception occurred: ' + e.toString()
+              echo 'Exception occurred container: ' + e.toString()
             }
+            try {
+              sh 'docker rmi ${image_name}:${tag_image}'
+            } catch (Exception e)
+            echo 'Exception occurred image: ' + e.toString()
           }
           sh 'npm run build'
           sh 'docker build -t miltonvilleda/${image_name}:${tag_image} .'
