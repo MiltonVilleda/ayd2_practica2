@@ -1,0 +1,75 @@
+pipeline {
+  agent any
+
+  tools {
+    nodejs "node"
+  }
+
+  parameters {
+    string(name: 'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
+    string(name: 'image_name', defaultValue: 'pagina_img', description: 'Nombre de la imagene docker.')
+    string(name: 'tag_image', defaultValue: 'latest', description: 'Tag de la imagen de la página.')
+    string(name: 'container_port', defaultValue: '80', description: 'Puerto que usa el contenedor')
+  }
+
+  environment {
+    DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+  }
+
+  stages {
+    stage('install') {
+      steps {
+        git branch: 'develop', url: 'https://github.com/MiltonVilleda/ayd2_practica2.git'
+        dir('frontend') {
+          sh 'npm install'
+        }
+
+        dir('server') {
+          sh 'npm install'
+        }
+      }
+    }
+
+    stage('test') {
+      steps {
+        dir('server') {
+          sh 'npm run test'
+        }
+      }
+    }
+    
+    stage('build') {
+      steps {
+        dir('frontend') {
+          script {
+            try {
+              sh 'docker stop ${container_name}'
+              sh 'docker rm ${container_name}'
+            } catch (Exception e) {
+              echo 'Exception occurred container: ' + e.toString()
+            }
+            try {
+              sh 'docker rmi ${image_name}:${tag_image}'
+            } catch (Exception e) {
+              echo 'Exception occurred image: ' + e.toString()
+            }
+          }
+          sh 'npm run build'
+          sh 'docker build -t ${image_name}:${tag_image} .'
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+          sh 'docker tag ${image_name}:${tag_image} miltonvilleda/${image_name}:${tag_image}'
+          sh 'docker push miltonvilleda/${image_name}:${tag_image}'
+          sh 'docker logout'
+        }
+      }
+    }
+    
+    stage('deploy') {
+      steps {
+        ansiblePlaybook credentialsId: 'slave1', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'deploy.yml'
+        ansiblePlaybook credentialsId: 'prod-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'deploy2.yml'
+      }
+    }
+  }
+
+}

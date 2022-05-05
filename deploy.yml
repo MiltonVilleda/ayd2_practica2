@@ -1,0 +1,19 @@
+---
+- name: test-server
+  hosts: test
+  become: true
+  tasks:
+  - name: Realizar pull de imagenes
+    shell: sudo docker pull miltonvilleda/pagina_img:latest
+  - name: remove container
+    docker_container:
+      name: web_page
+      state: absent
+  - name: create container
+    docker_container:
+      name: web_page
+      image: miltonvilleda/pagina_img:latest
+      state: started
+      ports:
+      - "8081:80"
+      restart_policy: always
